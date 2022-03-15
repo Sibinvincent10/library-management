@@ -5,10 +5,12 @@ const User = require('../../models/User');
 const jwt = require('jsonwebtoken')
 
 //get all books
-router.get('/books',authenticateToken, function(req, res, next){
-    Books.find({}).then(function(books){
-        res.send(books);
-    }); 
+router.get('/books',authenticateToken, async function(req, res, next){
+    const { skip , limit } = req.query;
+    const books = await Books.find()
+    .limit(limit)
+    .skip(skip);
+    res.send(books)
 });
 
 //get a particular book

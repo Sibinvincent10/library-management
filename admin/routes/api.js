@@ -3,12 +3,12 @@ const router = express.Router();
 const Books = require('../../models/Books');
 
 //get list of all books
-router.get('/books', function(req, res, next){
-    Books.find({}).then(function(books){
+router.get('/books', async function(req, res, next){
+    const { skip , limit } = req.query;
+    const books = await Books.find()
+    .limit(limit)
+    .skip(skip);
         res.send(books);
-    }).catch(next);
-    }); 
-
 
 
 //add a new books to the db
@@ -21,7 +21,8 @@ router.post('/book', function(req, res, next){
 //view a particular book
 router.get('/book/:id', function(req, res, next){
     try{
-        Books.findById(req.params.id).then(function(books){
+        Books.findById(req.params.id).populate("borrowedBy").then(function(books){
+            console.log(books);
             res.send(books);
         }); 
     }
@@ -41,4 +42,5 @@ router.put('/book/:id', function(req, res, next){
     });
 
 });
+})
 module.exports = router;

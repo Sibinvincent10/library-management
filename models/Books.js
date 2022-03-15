@@ -1,6 +1,7 @@
 const mongoose =require ('mongoose');
 const Schema = mongoose.Schema;
 
+
 const BookSchema = new Schema({
   bookName: {
     type: String,
@@ -24,5 +25,6 @@ borrowedBy : {
 });
 
 const Books = mongoose.model('book', BookSchema)
+
 
 module.exports = Books;
